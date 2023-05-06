@@ -1,0 +1,4 @@
+.folders-grid[b-7l0h7smlqq] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}

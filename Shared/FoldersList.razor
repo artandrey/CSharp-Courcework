@@ -1,0 +1,23 @@
+@using DB.Models
+@using Pages
+@using ImmagesApp.Shared.UI;
+
+<ul class="folders-grid">
+
+
+@foreach (var folder in Folders)
+            {
+                <li>
+                    <FolderComponent Folder="folder" />
+                </li>
+            }
+</ul>
+
+
+@code {
+    [Parameter]
+    public List<Folder> Folders { get; set; }
+
+    [CascadingParameter]
+    public Folders FoldersCascading {get; set;}
+}

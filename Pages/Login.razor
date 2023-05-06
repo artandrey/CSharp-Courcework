@@ -1,0 +1,73 @@
+@page "/login"
+@using Services
+@using Exceptions
+@inject AuthService authService
+
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager navigationManager
+
+@* <h3>
+    Login page
+</h3>
+<span>@message</span>
+<button @onclick="Authenticate">
+    Login
+</button>
+<button @onclick="Ragister">
+    Register
+</button> *@
+
+@* <div>
+    <h2>Sign in</h2>
+    <span>Hello 👍</span>
+    <div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Email address</label>
+  <input type="email" class="form-control" placeholder="name@example.com">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Password</label>
+  <input type="password" class="form-control" placeholder="password">
+</div> *@
+
+
+<LoginForm  />
+
+
+
+
+
+
+@code {
+    private string message = "Nothing happend";
+    private async Task Ragister()
+    {
+        await authService.Register(new DB.Models.User
+            {
+                Email = "email@com",
+                Name = "123",
+                Password = "1234",
+                Role = "1234",
+                Salt = "123"
+            });
+    }
+    private async Task Authenticate()
+    {
+        try
+        {
+            var result = await authService.Login("ban@rub.rub", "123456");
+            message = result.Email;
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+            await customAuthStateProvider.UpdateAuthenticationState(new Authentication.UserSession
+                {
+                    UserName = result.Name,
+                    Role = result.Role
+                });
+        }
+        catch (ServiceException e)
+        {
+            message = e.Message;
+        }
+        message = "Successfuly logined";
+        navigationManager.NavigateTo("/counter", true);
+    }
+}

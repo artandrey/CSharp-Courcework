@@ -1,0 +1,66 @@
+@attribute [Authorize]
+@page "/folders"
+@using Services
+@using DB.Models
+@using Validation.Models
+@inject AuthorisedFolderService folderService
+
+<h1>Secure Page</h1>
+
+<p>This page is only visible to authorized users.</p>
+
+<button @onclick="UpdateFoldersList">Load folders</button>
+
+@if (loading) {
+    <span>
+        Loading...
+    </span>
+}
+<FolderDialog OnDataSave="CreateFolder" />
+<CascadingValue Value="this">
+    <FoldersList Folders="folders" />
+</CascadingValue>
+
+@code {
+
+    public List<Folder> folders = new List<Folder>();
+    private bool loading = true;
+
+    public async Task CreateFolder(FolderDataModel folderData) {
+        var createdFolder = await folderService.Create(new Folder {
+            Name = folderData.Name
+        });
+        folders.Add(createdFolder);
+        StateHasChanged();
+    }
+
+    public async Task UpdateFoldersList() {
+        var usersFolders = await folderService.GetAll();
+        System.Console.WriteLine(usersFolders.Count());
+        folders = usersFolders;
+        loading = false;
+    }
+
+    protected override async void OnInitialized()
+    {
+        var usersFolders = await folderService.GetAll();
+
+        folders = usersFolders;
+        loading = false;
+        StateHasChanged();
+    }
+    
+    public async Task DeleteFolder(string id) {
+        await folderService.Delete(id);
+        var folder = folders.FirstOrDefault(f => f.Id == id);
+        if (folder != null) {
+            folders.Remove(folder);
+            StateHasChanged();
+        }
+    }
+
+    public async Task AddFriendToFolder(Folder folder) {
+        await folderService.AddUserByEmail(folder, "email@cum.com");
+    }
+}
+

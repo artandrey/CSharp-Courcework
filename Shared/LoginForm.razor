@@ -1,0 +1,37 @@
+@using Services
+@using Exceptions
+@inject AuthService authService
+@using Validation.Models
+@using ImmagesApp.Shared.UI;
+@inject NavigationManager navigationManager
+
+<EditForm Model="@LoginDataModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    
+    <span>@GlobalErrorMessage</span>
+
+    <h2>Login</h2>
+    <TextField Placeholder="Enter your email" @bind-Value="LoginDataModel.Email" ValidationFor="@(() => LoginDataModel.Email)" />
+    <TextField Type="password" Placeholder="Enter your password" @bind-Value="LoginDataModel.Password" ValidationFor="@(() => LoginDataModel.Password)" />
+
+    <input type="submit" class="btn btn-primary" value="Save"/>
+</EditForm>
+
+@code {
+
+    public LoginDataModel LoginDataModel = new();
+
+    public string GlobalErrorMessage {get; set;} = "";
+
+    private async Task HandleValidSubmit() {
+        try
+        {
+            await authService.Login(LoginDataModel.Email!, LoginDataModel.Password!);
+            navigationManager.NavigateTo("/", true);
+        }
+        catch (ServiceException error)
+        {
+            GlobalErrorMessage = error.Message;
+        }
+    }
+}

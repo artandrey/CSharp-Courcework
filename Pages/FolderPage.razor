@@ -1,0 +1,29 @@
+@page "/folders/{folderId}"
+@using Services
+@using DB.Models
+@inject AuthorisedFolderService folderService
+
+<div>
+    <a href="/folders">Back</a>
+    @if (IsLoaded) {
+        <h2>@Folder.Name</h2>
+    }
+    else {
+        <span>Loading</span>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string FolderId { get; set; } = "";
+    private Folder Folder { get; set; }
+    private bool IsLoaded { get; set; } = false;
+
+        protected override async void OnInitialized()
+        {
+            Folder = await folderService.GetById(FolderId);
+            IsLoaded = true;
+            StateHasChanged();
+        }
+}
+

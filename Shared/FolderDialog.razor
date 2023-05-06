@@ -1,0 +1,37 @@
+@using Services
+@using Exceptions
+@inject AuthService authService
+@using Validation.Models
+@using ImmagesApp.Shared.UI;
+@inject NavigationManager navigationManager
+
+<EditForm Model="@FolderDataModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <TextField Placeholder="Enter folder name" @bind-Value="FolderDataModel.Name" ValidationFor="@(() => FolderDataModel.Name)" />
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    public delegate Task OnDataSaveDelegate(FolderDataModel formData);
+
+    [Parameter]
+    public OnDataSaveDelegate OnDataSave { get; set; } = null!;
+
+    [Parameter]
+    public string FolderName {get; set;} = "";
+    protected FolderDataModel FolderDataModel = null!;
+
+
+    protected override void OnInitialized()
+    {
+        FolderDataModel = new FolderDataModel {Name = FolderName};
+    }
+    
+    public async void HandleValidSubmit() {
+        await OnDataSave.Invoke(FolderDataModel);
+        FolderDataModel.Name = "";
+        StateHasChanged();
+    }
+}
+
+

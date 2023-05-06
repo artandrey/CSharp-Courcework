@@ -1,0 +1,33 @@
+@using DB.Models
+@using Pages
+
+<div class="card p-4 m-2">
+    <a href="/folders/@Folder.Id">
+
+    <span>@Folder.Name</span>
+    <button @onclick="DeleteFolder">
+        Delete
+    </button>
+    <button @onclick="AddFriend">
+        Add friend
+    </button>
+    </a>
+</div>
+
+    @code {
+        [Parameter]
+        public Folder Folder { get; set; } = null!;
+
+        [CascadingParameter]
+        public Folders FoldersCascading { get; set; }
+
+
+        private async Task AddFriend()
+        {
+        await FoldersCascading.AddFriendToFolder(Folder);
+        }
+        private async Task DeleteFolder()
+        {
+        await FoldersCascading.DeleteFolder(Folder.Id);
+        }
+    }
