@@ -1,0 +1,119 @@
+@using DB.Models
+
+<div class="wrapper">
+  <div class="slider">
+    @if(Slider.CanGoBack()) {
+        <button class="btn btn-outline-light slider-button" @onclick="PreviousPicture">◀</button>
+    }
+        @if (CurrentPicture != null)
+        {
+        <div class="image">
+          <ImmageLoader
+            Src="@($"/api/images/{FolderID}/image/{CurrentPicture.ID}?size=600")"
+            Width="600"
+          />
+        </div>
+        }
+    @if(Slider.CanGoNext()) {
+        <button class="btn btn-outline-light slider-button" @onclick="NextPicture">▶</button>
+    }
+  </div>
+    @if (CurrentPicture != null)
+    {
+      <PictureSidebar Picture="@CurrentPicture" />
+    }
+</div>
+
+@code {
+    private class EntitySlider<T> where T : MongoDB.Entities.Entity
+{
+    private List<T> Items { get; set; }
+    private string CurrentId { get; set; }
+
+    public EntitySlider(List<T> items)
+    {
+        Items = items;
+        CurrentId = items[0].ID;
+    }
+
+    public EntitySlider(List<T> items, string currentId)
+    {
+        Items = items;
+        CurrentId = currentId;
+    }
+
+    public T? GetCurrent()
+    {
+        return Items.Find(p => p.ID == CurrentId);
+    }
+
+    public T? Next()
+    {
+        int currentIndex = Items.FindIndex(p => p.ID == CurrentId);
+        int nextIndex = currentIndex + 1;
+
+        if (nextIndex >= Items.Count())
+            return null;
+
+        var item = Items[nextIndex];
+        CurrentId = item.ID;
+        return item;
+    }
+
+    public bool CanGoNext()
+    {
+        int currentIndex = Items.FindIndex(p => p.ID == CurrentId);
+        return currentIndex < Items.Count - 1;
+    }
+
+    public T? Previous()
+    {
+        int currentIndex = Items.FindIndex(p => p.ID == CurrentId);
+        int previousIndex = currentIndex - 1;
+
+        if (previousIndex < 0)
+            return null;
+
+        var item = Items[previousIndex];
+        CurrentId = item.ID;
+        return item;
+    }
+
+    public bool CanGoBack()
+    {
+        int currentIndex = Items.FindIndex(p => p.ID == CurrentId);
+        return currentIndex > 0;
+    }
+}
+
+    [Parameter] public List<Picture> Pictures { get; set; } = null!; [Parameter]
+    public Picture? CurrentPicture { get; set; } = null; [Parameter]
+    public string
+    FolderID
+    { get; set; } = null!; private EntitySlider<Picture> Slider { get; set; } =
+    null!; private void NextPicture()
+    {
+        CurrentPicture = Slider.Next();
+        StateHasChanged();
+    }
+    private void PreviousPicture()
+    {
+        CurrentPicture =
+        Slider.Previous(); StateHasChanged();
+    }
+    protected override void OnInitialized()
+    {
+        if (CurrentPicture == null) { Slider = new(Pictures); }
+        else
+        {
+            Slider =
+    new(Pictures, CurrentPicture.ID);
+        }
+        CurrentPicture = Slider.GetCurrent();
+    }
+    protected override void OnParametersSet()
+    {
+        Slider = new(Pictures,
+    CurrentPicture?.ID!); CurrentPicture = Slider.GetCurrent();
+    }
+} 

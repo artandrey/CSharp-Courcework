@@ -1,0 +1,16 @@
+@page "/logout"
+
+@using Services
+@inject AuthService authService
+@inject NavigationManager navigationManager
+
+<h2>Sayonara!</h2>
+
+@code {
+        protected override async Task OnInitializedAsync()
+        {
+            await authService.Logout();
+            navigationManager.NavigateTo("/", true);
+        }
+}
+

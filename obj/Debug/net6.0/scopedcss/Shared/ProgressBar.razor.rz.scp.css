@@ -1,0 +1,15 @@
+.progress-bar[b-vzylcnhhnl] {
+  width: 100%;
+  height: 2rem;
+  background-color: #e9e9e9;
+  border: #0fa4e9 solid 1px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-marker[b-vzylcnhhnl] {
+  width: calc(var(--progress, 0) * 1%);
+  height: 100%;
+  transition: width 0.5s;
+  background-color: #26a5eefb;
+}

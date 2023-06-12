@@ -3,64 +3,115 @@
 @using Services
 @using DB.Models
 @using Validation.Models
+@using Exceptions
 @inject AuthorisedFolderService folderService
 
-<h1>Secure Page</h1>
 
-<p>This page is only visible to authorized users.</p>
-
-<button @onclick="UpdateFoldersList">Load folders</button>
-
-@if (loading) {
-    <span>
-        Loading...
-    </span>
+@if (loading)
+{
+        <Loader />
 }
 <FolderDialog OnDataSave="CreateFolder" />
 <CascadingValue Value="this">
-    <FoldersList Folders="folders" />
+    <FoldersList Folders="folders.Values.ToList().OrderBy(folder => folder.CreationDate).ToList()" />
 </CascadingValue>
 
 @code {
 
-    public List<Folder> folders = new List<Folder>();
+    public Dictionary<string, Folder> folders = new ();
     private bool loading = true;
 
-    public async Task CreateFolder(FolderDataModel folderData) {
-        var createdFolder = await folderService.Create(new Folder {
-            Name = folderData.Name
-        });
-        folders.Add(createdFolder);
+    public ErrorLogger Logger { get; set; } = null!;
+    
+    
+    public async Task CreateFolder(FolderDataModel folderData)
+    {
+        try
+        {
+            var createdFolder = await folderService.Create(new Folder
+                {
+                    Name = folderData.Name
+                });
+            folders[createdFolder.ID] = createdFolder;
+        }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
         StateHasChanged();
     }
 
-    public async Task UpdateFoldersList() {
-        var usersFolders = await folderService.GetAll();
-        System.Console.WriteLine(usersFolders.Count());
-        folders = usersFolders;
-        loading = false;
+    public async Task UpdateFoldersList()
+    {
+        try
+        {
+            var usersFolders = await folderService.GetAll();
+            System.Console.WriteLine(usersFolders.Count());
+            folders = usersFolders.ToDictionary((folder) => folder.ID);
+            loading = false;
+        }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
     }
 
     protected override async void OnInitialized()
     {
-        var usersFolders = await folderService.GetAll();
+        try
+        {
+            var usersFolders = await folderService.GetAll();
 
-        folders = usersFolders;
-        loading = false;
+            folders = usersFolders.ToDictionary((folder) => folder.ID);
+            loading = false;
+        }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
         StateHasChanged();
     }
-    
-    public async Task DeleteFolder(string id) {
-        await folderService.Delete(id);
-        var folder = folders.FirstOrDefault(f => f.Id == id);
-        if (folder != null) {
-            folders.Remove(folder);
-            StateHasChanged();
+
+    public async Task DeleteFolder(string id)
+    {
+        try
+        {
+            await folderService.Delete(id);
+
+            folders.Remove(id);
         }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
+        StateHasChanged();
     }
 
-    public async Task AddFriendToFolder(Folder folder) {
-        await folderService.AddUserByEmail(folder, "email@cum.com");
+    public async Task RenameFolder(Folder folder, string name)
+    {
+        try
+        {
+            var updated = await folderService.RenameFolder(folder.ID, name);
+            folders[updated.ID] = updated;
+        }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
+        StateHasChanged();
     }
+
+    public async Task LeaveFolder(Folder folder) {
+        try
+        {
+            await folderService.LeaveFolder(folder);
+            folders.Remove(folder.ID);
+        }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
+        StateHasChanged();
+    } 
 }
 

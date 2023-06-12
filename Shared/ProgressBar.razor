@@ -1,0 +1,10 @@
+<div style="--progress: @Progress.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);;" class="progress-bar">
+    <div class="progress-marker"></div>
+</div>
+
+@code {
+    [Parameter]
+    public decimal Progress { get; set; } = 0;
+    
+    
+}

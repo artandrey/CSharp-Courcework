@@ -1,0 +1,21 @@
+.wrapper[b-4r3hbvtln3] {
+  height: 100%;
+  display: flex;
+}
+
+.slider[b-4r3hbvtln3] {
+  padding: 0 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider-button[b-4r3hbvtln3] {
+  font-size: 4rem;
+}
+
+.image[b-4r3hbvtln3] {
+  width: 100%;
+  margin: 0 2rem;
+}

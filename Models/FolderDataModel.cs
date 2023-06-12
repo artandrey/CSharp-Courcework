@@ -3,6 +3,6 @@ namespace Validation.Models;
 public class FolderDataModel
 {
     [Required]
-    [StringLength(maximumLength: 256)]
-    public string? Name { get; set; }
+    [StringLength(maximumLength: 50)]
+    public string Name { get; set; } = null!;
 }

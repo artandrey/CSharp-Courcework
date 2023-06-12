@@ -1,0 +1,19 @@
+@using DB.Models @using Util
+
+<div class="info-wrapper">
+  <h3 class="picture-title">@Picture.Title</h3>
+  <ul class="properties-list list-unstyled">
+    <li><span>Original resolution: @Picture.Width x @Picture.Height</span></li>
+    <li><span>Uploaded at: @Picture.CreationDate</span></li>
+    <li>
+      <span>Size: @(MemoryUnitConverter.FormatBytes(Picture.FileSize))</span>
+    </li>
+    <li>
+      <span> Original format: @Picture.ContentType </span>
+    </li>
+  </ul>
+</div>
+
+@code {
+    [Parameter] public Picture Picture { get; set; } = null!;
+} 

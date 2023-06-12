@@ -1,0 +1,13 @@
+@using DB.Models
+
+<aside class="wrapper">
+    <PictureInfo Picture="@Picture" />
+    <PictureDownload Picture="@Picture" />
+</aside>
+
+@code {
+    [Parameter]
+    public Picture Picture { get; set; } = null!;
+    
+    
+}

@@ -1,0 +1,14 @@
+<CascadingValue Value="this"> @ChildContent </CascadingValue>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; } = null!;
+    public interface ILoggedError { string Message { get; } }
+    public
+    Queue<Exception> Exceptions
+    { get; set; } = new(); public async void
+    Log(Exception exception)
+    {
+        Exceptions.Enqueue(exception); StateHasChanged();
+        await Task.Delay(5000); Exceptions.Dequeue(); StateHasChanged();
+    }
+} 

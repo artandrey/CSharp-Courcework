@@ -1,0 +1,16 @@
+<div class="warpper" @onclick="HandleClose">
+  <button @onclick="HandleClose" class="close-button btn btn-warning">
+    Go back
+  </button>
+  <div class="content-container" @onclick:stopPropagation>@ChildContent</div>
+</div>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; } = null!;
+    public delegate void OnModalCloseDelegate(); [Parameter]
+    public
+    OnModalCloseDelegate? OnModalClose
+    { get; set; } = null; private void
+    HandleClose()
+    { if (OnModalClose != null) { OnModalClose(); } }
+} 

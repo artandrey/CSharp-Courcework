@@ -1,0 +1,151 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #222;
+}
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    -72deg,
+    #dedede,
+    #ffffff 16%,
+    #dedede 21%,
+    #ffffff 24%,
+    #caa1de 27%,
+    #dea1ca 30%,
+    #dedede 38%,
+    #ffffff 45%,
+    #ffffff 60%,
+    #dedede 72%,
+    #ffffff 80%,
+    #dedede 84%,
+    #caa1de 93%,
+    #dea1ca
+  );
+}
+
+.title {
+  font-size: 10rem;
+  background: linear-gradient(to bottom, #1882c9, #0672bb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.start-button {
+  margin-top: 2rem;
+  padding: 1rem 4rem;
+  font-size: 2rem;
+  background: linear-gradient(to bottom, #1988d3, #4a9be7);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.start-button {
+  animation: pulse-shadow 3s infinite forwards;
+}
+
+@keyframes pulse-shadow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 153, 255, 0.233),
+      0 0 0 0 rgba(0, 153, 255, 0.192), 0 0 0 0 rgba(0, 162, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(0, 162, 255, 0.199),
+      0 0 0 20px rgba(0, 132, 255, 0.3), 0 0 0 30px rgba(0, 174, 255, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 153, 255, 0), 0 0 0 0 rgba(0, 132, 255, 0),
+      0 0 0 0 rgba(0, 140, 255, 0);
+  }
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center;
+}
+
+.floating-icons {
+  position: absolute;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.icon {
+  display: block;
+  border-radius: 50%;
+  position: absolute;
+  animation: float 4s ease-in-out infinite;
+}
+
+.icon img {
+  width: 100%;
+}
+
+.icon1 {
+  width: 3rem;
+  top: 10rem;
+  left: 6rem;
+  animation-duration: 3s;
+}
+
+.icon2 {
+  width: 10rem;
+  top: 0;
+  right: 6rem;
+  animation-duration: 6s;
+}
+
+.icon3 {
+  width: 15rem;
+  bottom: 9rem;
+  left: 16rem;
+  animation-duration: 4s;
+}
+.icon4 {
+  width: 10rem;
+  bottom: 19rem;
+  left: 1rem;
+  animation-duration: 7s;
+}
+
+.icon5 {
+  width: 7rem;
+  bottom: -10rem;
+  left: 18rem;
+  animation-duration: 8s;
+}
+
+.icon6 {
+  width: 10rem;
+  bottom: 9rem;
+  left: -26rem;
+  animation-duration: 4s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, -1rem);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}

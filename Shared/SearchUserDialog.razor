@@ -1,0 +1,34 @@
+@using Services
+@using Exceptions
+@inject AuthService authService
+@using Validation.Models
+@using ImmagesApp.Shared.UI;
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager navigationManager
+
+
+<EditForm Model="@UserData" OnValidSubmit="HandleValidSubmit">
+    <div class="content-wrapper">
+        <DataAnnotationsValidator />
+        <TextField Placeholder="User email to add" @bind-Value="UserData.Email" ValidationFor="@(() => UserData.Email)" />
+        <button class="btn btn-outline-success" type="submit">Add</button>
+    </div>
+</EditForm>
+
+@code {
+
+    public delegate Task<bool> OnDataSaveDelegate(AddUserDataModel userData);
+
+    [Parameter]
+    public OnDataSaveDelegate OnDataSave { get; set; } = null!;
+
+    protected AddUserDataModel UserData = new();
+    
+    public async void HandleValidSubmit() {
+        var result = await OnDataSave.Invoke(UserData);
+        if(result) UserData.Email = "";
+        StateHasChanged();
+    }
+}
+
+

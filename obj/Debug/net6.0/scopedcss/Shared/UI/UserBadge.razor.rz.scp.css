@@ -1,0 +1,28 @@
+.wrapper[b-o0ackf2cff] {
+  padding: 0.5rem 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.avatar[b-o0ackf2cff] {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.avatar-letter[b-o0ackf2cff] {
+  color: #fff;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.user-info[b-o0ackf2cff] {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #222;
+  font-size: 0.9rem;
+}

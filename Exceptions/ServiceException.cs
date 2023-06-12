@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace Exceptions
 {
     [Serializable]
-    internal class ServiceException : Exception
+    public class ServiceException : Exception
     {
         // public ServiceException()
         // {

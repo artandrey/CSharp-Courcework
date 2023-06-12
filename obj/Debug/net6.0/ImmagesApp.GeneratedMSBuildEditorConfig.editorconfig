@@ -19,44 +19,36 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/ImmagesApp/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Projects/ImmagesApp/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Projects/ImmagesApp/Pages/FolderPage.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9sZGVyUGFnZS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Projects/ImmagesApp/Pages/Folders.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9sZGVycy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/ImmagesApp/Pages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+[C:/Projects/ImmagesApp/Pages/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/ImmagesApp/Pages/Login.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+[C:/Projects/ImmagesApp/Shared/AddUserDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEFkZFVzZXJEaWFsb2cucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/ImmagesApp/Shared/FolderDialog.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEZvbGRlckRpYWxvZy5yYXpvcg==
+[C:/Projects/ImmagesApp/Shared/ErrorLogger.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEVycm9yTG9nZ2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/ImmagesApp/Shared/JWTManager.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEpXVE1hbmFnZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projects/ImmagesApp/Shared/LoginForm.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvZ2luRm9ybS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/ImmagesApp/Shared/SurveyPrompt.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+[C:/Projects/ImmagesApp/Shared/RegisterForm.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFJlZ2lzdGVyRm9ybS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/ImmagesApp/Shared/UI/FolderComponent.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFVJXEZvbGRlckNvbXBvbmVudC5yYXpvcg==
+[C:/Projects/ImmagesApp/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projects/ImmagesApp/Shared/UI/TextField.razor]
@@ -67,17 +59,97 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projects/ImmagesApp/Pages/AuthPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-jlht6g8t47
+
+[C:/Projects/ImmagesApp/Pages/FolderPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9sZGVyUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-jw8i9a7lbo
+
+[C:/Projects/ImmagesApp/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-34xhw6i6yd
+
+[C:/Projects/ImmagesApp/Shared/DoubleClickRename.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXERvdWJsZUNsaWNrUmVuYW1lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-jtjynx6oa9
+
+[C:/Projects/ImmagesApp/Shared/ErrorDisplayer.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEVycm9yRGlzcGxheWVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-stwo5kjc2m
+
+[C:/Projects/ImmagesApp/Shared/FileUpload.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEZpbGVVcGxvYWQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-jf9b4rm584
+
+[C:/Projects/ImmagesApp/Shared/FolderDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEZvbGRlckRpYWxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-hnz3amutmd
+
 [C:/Projects/ImmagesApp/Shared/FoldersList.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEZvbGRlcnNMaXN0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-7l0h7smlqq
+
+[C:/Projects/ImmagesApp/Shared/ImmageLoader.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEltbWFnZUxvYWRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-r960jxjs8h
+
+[C:/Projects/ImmagesApp/Shared/Loader.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvYWRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-6d91w3dkhy
 
 [C:/Projects/ImmagesApp/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-jtd4jgdvsw
 
+[C:/Projects/ImmagesApp/Shared/MediaItem.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1lZGlhSXRlbS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-f3k97f60kt
+
+[C:/Projects/ImmagesApp/Shared/ModalWrapper.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1vZGFsV3JhcHBlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-ptvp7d7fg2
+
 [C:/Projects/ImmagesApp/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-e87nz3o3b9
+
+[C:/Projects/ImmagesApp/Shared/PictureDownload.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFBpY3R1cmVEb3dubG9hZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-pzg4lzjfsc
+
+[C:/Projects/ImmagesApp/Shared/PictureInfo.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFBpY3R1cmVJbmZvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-hgaymz9ogq
+
+[C:/Projects/ImmagesApp/Shared/PicturesCarousel.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFBpY3R1cmVzQ2Fyb3VzZWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-4r3hbvtln3
+
+[C:/Projects/ImmagesApp/Shared/PictureSidebar.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFBpY3R1cmVTaWRlYmFyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-k6j8bmeb5m
+
+[C:/Projects/ImmagesApp/Shared/ProgressBar.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFByb2dyZXNzQmFyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-vzylcnhhnl
+
+[C:/Projects/ImmagesApp/Shared/SearchUserDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFNlYXJjaFVzZXJEaWFsb2cucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-tazm3463vo
+
+[C:/Projects/ImmagesApp/Shared/UI/AppearenceAnimation.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFVJXEFwcGVhcmVuY2VBbmltYXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-vcsifewzav
+
+[C:/Projects/ImmagesApp/Shared/UI/FolderComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFVJXEZvbGRlckNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-9pbrk70bte
+
+[C:/Projects/ImmagesApp/Shared/UI/UserBadge.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFVJXFVzZXJCYWRnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-o0ackf2cff
 
 [C:/Projects/ImmagesApp/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s

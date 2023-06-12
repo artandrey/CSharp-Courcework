@@ -1,0 +1,20 @@
+.form[b-pzg4lzjfsc] {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form fieldset[b-pzg4lzjfsc] {
+  padding: 1rem 1rem;
+  border-radius: 10px;
+  box-shadow: #0000004d 0 5px 10px;
+}
+
+.form .styled-label[b-pzg4lzjfsc] {
+  padding: 0.2rem 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: #222 solid 1px;
+  border-radius: 10px;
+}

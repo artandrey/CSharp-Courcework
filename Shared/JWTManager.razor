@@ -1,0 +1,73 @@
+@using Services
+@using System.Text.Json
+@using DTO
+@inject JwtService jwtService
+@inject AuthService authService
+@inject IJSRuntime jsRuntime
+
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = null!;
+
+    private bool IsRefreshing { get; set; } = false;
+
+    private async void AuthChangeHandler(Task<AuthenticationState> authStateTask) {
+        var state = await authStateTask;    
+    }
+
+    private async Task SetAuthenticationCookie(string? cookieValue) {
+    var payload = new TokenDTO() {
+        Token = cookieValue!
+    };
+        // convert the payload to a JSON string
+        var json = JsonSerializer.Serialize(payload);
+
+        Dictionary<string, string> headers = new(){
+            {"Content-Type", "application/json"}
+        };
+
+        var args = new object[] {"/api/set-me-cookie", new
+        {
+            method = "POST",
+            headers = headers,
+            body = json
+        }};
+
+        // make the request using fetch and IJSRuntime
+        var response = await jsRuntime.InvokeAsync<HttpResponseMessage>("fetch", args);
+    }
+
+    public async Task RequestTokenRefresh() {
+        IsRefreshing = true;
+        var userId = await authService.GetUserId();
+        if (userId == null) {
+            IsRefreshing = false;
+            return;
+        };
+        var token = jwtService.GenerateToken(userId);
+        await SetAuthenticationCookie(token);
+        IsRefreshing = false;
+    }
+
+    public async void OnAuthStateChange(Task<AuthenticationState> awaitedAuthState) {
+        var state = await awaitedAuthState;
+        if (state == null) {
+            await SetAuthenticationCookie(null);
+            return;
+        }
+        await RequestTokenRefresh();
+    }
+    
+    protected override async void OnInitialized()
+    {
+        await RequestTokenRefresh();
+    }
+
+}
+

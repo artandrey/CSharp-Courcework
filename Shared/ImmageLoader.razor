@@ -1,0 +1,60 @@
+
+<div class="wrapper" style="width: 100%; aspect-ratio: @AspectRatio.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);">
+    <img style="object-fit: @(ObjectFit); visibility: @(IsLoaded ? "visible" : "hidden");" class="image" @onload="OnLoaded" @onerror="OnError" src="@Src">
+    <div class="state-marker">
+        @if(!IsLoaded && !IsError) {
+            <Loader />
+        }
+        @if(IsError) {
+            <span>Error</span>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Src { get; set; } = null!;
+    
+    [Parameter]
+    public int Width { get; set; } = 100;
+
+    [Parameter]
+    public double AspectRatio { get; set; } = 16d/9d;
+
+    [Parameter]
+    public string ObjectFit { get; set; } = "contain";
+    
+    
+    
+    
+    
+    private bool IsLoaded { get; set; } = false;
+
+    private bool IsError { get; set; } = false;
+
+    private void OnLoaded()
+    {
+        IsLoaded = true;
+        IsError = false;
+    }
+
+    private void OnError()
+    {
+        IsLoaded = false;
+        IsError = true;
+    }
+    
+        protected override void OnParametersSet()
+        {
+            IsLoaded = false;
+            IsError = false;
+        }
+
+
+
+
+    
+    
+    
+}
+

@@ -1,0 +1,42 @@
+@using Services
+@using Exceptions
+@inject AuthService authService
+@using Validation.Models
+@using DB.Models
+@using ImmagesApp.Shared.UI;
+@inject NavigationManager navigationManager
+
+<EditForm class="auth-form" Model="@RegisterDataModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+
+    <h2>Sign up</h2>
+    <TextField Placeholder="Enter your name" @bind-Value="RegisterDataModel.Name" ValidationFor="@(() => RegisterDataModel.Name)" />
+    <TextField Placeholder="Enter your email" @bind-Value="RegisterDataModel.Email" ValidationFor="@(() => RegisterDataModel.Email)" />
+    <TextField Type="password" Placeholder="Enter your password" @bind-Value="RegisterDataModel.Password" ValidationFor="@(() => RegisterDataModel.Password)" />
+
+    <input type="submit" class="btn btn-primary" value="Save"/>
+</EditForm>
+
+@code {
+
+    [CascadingParameter]
+    public ErrorLogger Logger { get; set; } = null!;
+
+    private RegisterDataModel RegisterDataModel = new();
+
+    private async Task HandleValidSubmit() {
+        try
+        {
+            await authService.Register(new User {
+                Email = RegisterDataModel.Email!,
+                Password = RegisterDataModel.Password!,
+                Name = RegisterDataModel.Name!
+            });
+            navigationManager.NavigateTo("/", true);
+        }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
+    }
+}

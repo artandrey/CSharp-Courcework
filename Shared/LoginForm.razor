@@ -5,12 +5,10 @@
 @using ImmagesApp.Shared.UI;
 @inject NavigationManager navigationManager
 
-<EditForm Model="@LoginDataModel" OnValidSubmit="HandleValidSubmit">
+<EditForm class="auth-form" Model="@LoginDataModel" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
-    
-    <span>@GlobalErrorMessage</span>
 
-    <h2>Login</h2>
+    <h2>Sing in</h2>
     <TextField Placeholder="Enter your email" @bind-Value="LoginDataModel.Email" ValidationFor="@(() => LoginDataModel.Email)" />
     <TextField Type="password" Placeholder="Enter your password" @bind-Value="LoginDataModel.Password" ValidationFor="@(() => LoginDataModel.Password)" />
 
@@ -18,10 +16,11 @@
 </EditForm>
 
 @code {
-
+    [CascadingParameter]
+    public ErrorLogger Logger { get; set; } = null!;
+    
+    
     public LoginDataModel LoginDataModel = new();
-
-    public string GlobalErrorMessage {get; set;} = "";
 
     private async Task HandleValidSubmit() {
         try
@@ -31,7 +30,7 @@
         }
         catch (ServiceException error)
         {
-            GlobalErrorMessage = error.Message;
+            Logger.Log(error);
         }
     }
 }

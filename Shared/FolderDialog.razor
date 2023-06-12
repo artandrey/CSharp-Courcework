@@ -6,10 +6,17 @@
 @inject NavigationManager navigationManager
 
 <EditForm Model="@FolderDataModel" OnValidSubmit="HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <TextField Placeholder="Enter folder name" @bind-Value="FolderDataModel.Name" ValidationFor="@(() => FolderDataModel.Name)" />
-    <button type="submit">Save</button>
+    <div class="folder-form-content">
+        <div class="instructions-wrapper">
+            <p class="instructions-text">Here you can create new folder</p>
+            <img class="instructions-icon" src="/assets/icons/point-down.png" alt="" srcset="">
+        </div>
+        <DataAnnotationsValidator />
+        <TextField Placeholder="Enter folder name" @bind-Value="FolderDataModel.Name" ValidationFor="@(() => FolderDataModel.Name)" class="form-control" />
+        <button type="submit" class="btn btn-success">Save</button>
+    </div>
 </EditForm>
+
 
 @code {
     public delegate Task OnDataSaveDelegate(FolderDataModel formData);

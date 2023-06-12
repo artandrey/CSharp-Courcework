@@ -1,0 +1,16 @@
+.info-wrapper[b-hgaymz9ogq] {
+  padding-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.picture-title[b-hgaymz9ogq] {
+  font-size: 1.6rem;
+}
+
+.properties-list[b-hgaymz9ogq] {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

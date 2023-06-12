@@ -1,0 +1,19 @@
+.wrapper[b-r960jxjs8h] {
+  background-color: #e6e5e5;
+  position: relative;
+}
+
+.image[b-r960jxjs8h] {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+}
+
+.state-marker[b-r960jxjs8h] {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,57 @@
+@using Validation.Models
+@using ImmagesApp.Shared.UI
+
+<div class="wrapper">
+@if(IsUpdating) {
+    <EditForm Model="@FolderDataModel" OnValidSubmit="HandleValidSubmit">
+        <div class="input-wrapper">
+            <DataAnnotationsValidator />
+            <TextField Placeholder="Enter folder name" @bind-Value="FolderDataModel.Name" ValidationFor="@(() => FolderDataModel.Name)" />
+            <button class="btn btn-outline-success" type="submit">&#10003;</button>
+            <button class="btn btn-outline-danger" @onclick="SetNotUpdating" type="reset">&#10006;</button>
+        </div>
+    </EditForm>
+    
+}
+else {
+<span class="text" @ondblclick="SetUpdating">@Name</span>
+}
+</div>
+
+
+@code {
+    [Parameter]
+    public string Name { get; set; } = "";
+
+    public delegate Task OnDataSaveDelegate(string folderName);
+
+    [Parameter]
+    public OnDataSaveDelegate OnSave { get; set; } = null!;
+
+    private bool IsUpdating { get; set; } = false;
+
+    private FolderDataModel FolderDataModel { get; set; } = new();
+    
+    private void HandleValidSubmit() {
+        IsUpdating = false;
+        OnSave(FolderDataModel.Name);
+    }
+
+    private void SetUpdating() {
+        IsUpdating = true;
+    }
+    private void SetNotUpdating() {
+        IsUpdating = false;
+    }
+
+    protected override void OnInitialized()
+    {
+        FolderDataModel = new() {
+            Name = Name
+        };
+    }
+
+
+    
+}
+

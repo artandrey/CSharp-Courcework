@@ -1,0 +1,51 @@
+@using Services
+@using Exceptions
+@inject AuthService authService
+@using DB.Models
+@using Validation.Models
+@using System.ComponentModel.DataAnnotations
+@inject AuthorisedFolderService folderService
+
+
+<SearchUserDialog OnDataSave="HandleUserSearch" />
+
+@code {
+
+    public delegate void OnUserAddDelegate(User user);
+
+    [Parameter]
+    public OnUserAddDelegate OnUserAdd { get; set; } = null!;
+
+
+    [Parameter]
+    public Folder Folder {get; set;} = null!;
+
+    [CascadingParameter]
+    public ErrorLogger Logger { get; set; } = null!;
+    
+    
+    
+    public async Task<bool> HandleUserSearch(AddUserDataModel userData) {
+
+        // ....
+        try
+        {
+            var user = await folderService.AddUserByEmail(Folder.ID, userData.Email);
+
+            if (OnUserAdd != null) {
+                OnUserAdd.Invoke(user);
+            }
+
+        }
+        catch (ServiceException error)
+        {
+             Logger.Log(error);
+             return false;
+        }
+        
+        StateHasChanged();
+        return true;
+    }
+}
+
+

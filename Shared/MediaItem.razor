@@ -1,0 +1,72 @@
+<div>
+    <div class="wrapper @(Selected ? "selected" : "")">
+        @if(Selectable) {
+            <input type="checkbox" @onchange="(e) => HandleSelect((bool)e.Value!)" checked="@Selected">
+        }
+        <div>
+            @MediaContent
+        </div>
+        <aside class="sidebar">
+            @Sidebar
+        </aside>
+    </div>
+    <div class="bottom-bar"></div>
+    @if (Renameable)
+    {
+        <DoubleClickRename Name="@Title" OnSave="(title) => HandleRename(title)" />
+    }
+    else {
+        <span>@Title</span>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment MediaContent { get; set; } = null!;
+
+    [Parameter]
+    public RenderFragment? Sidebar { get; set; }
+
+    [Parameter]
+    public bool Selected { get; set; } = false;
+
+    [Parameter]
+    public string Title { get; set; } = "";
+
+    [Parameter]
+    public bool Renameable { get; set; } = true;
+
+    [Parameter]
+    public bool Selectable { get; set; } = true;
+    
+    
+    
+    
+    
+    
+
+    public delegate void OnSelectedDelegate(bool value);
+    public delegate Task OnDataSaveDelegate(string value);
+    
+    [Parameter]
+    public OnSelectedDelegate? OnSelected { get; set; }
+
+    [Parameter]
+    public OnDataSaveDelegate? OnRename { get; set; }
+    
+    
+    
+    private void HandleSelect(bool isChecked) {
+        if(OnSelected != null) {
+            OnSelected(isChecked);
+        }
+    }
+
+    private async Task HandleRename(string title) {
+        if(OnRename != null) {
+            await OnRename(title);
+        }
+    }
+    
+    
+}

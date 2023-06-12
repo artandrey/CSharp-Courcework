@@ -1,4 +1,12 @@
 .folders-grid[b-7l0h7smlqq] {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  list-style: none;
+  justify-content: start;
+  flex-direction: row-reverse;
+}
+
+.folder-item[b-7l0h7smlqq] {
+  flex: 0 1 300px;
 }

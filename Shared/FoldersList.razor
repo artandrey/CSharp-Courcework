@@ -1,14 +1,20 @@
 @using DB.Models
 @using Pages
+@using Services
 @using ImmagesApp.Shared.UI;
+@inject AuthService authService
+@* @inject JwtService jwt
 
+<h2>@Token</h2> *@
 <ul class="folders-grid">
 
 
 @foreach (var folder in Folders)
             {
-                <li>
-                    <FolderComponent Folder="folder" />
+                <li class="folder-item" Key="@folder.ID">
+                    <AppearenceAnimation>
+                        <FolderComponent Folder="folder" IsOwner="folder.Creator.ID == UserId" />
+                    </AppearenceAnimation>
                 </li>
             }
 </ul>
@@ -16,8 +22,13 @@
 
 @code {
     [Parameter]
-    public List<Folder> Folders { get; set; }
+    public List<Folder> Folders { get; set; } = null!;
 
-    [CascadingParameter]
-    public Folders FoldersCascading {get; set;}
+    private string? UserId {get; set; } = null;
+    
+    protected override async void OnInitialized()
+    {
+        UserId = await authService.GetUserId();
+    }
 }
+

@@ -1,0 +1,67 @@
+@using DB.Models
+@using Validation.Models
+
+<div>
+    <form class="form">
+        <fieldset>
+            <legend>Format</legend>
+            <select name="format" @bind="@DownloadProperties.Format">
+                <option value="png">PNG</option>
+                <option value="jpg">JPG</option>
+                <option value="webp">WEBP</option>
+                <option value="bmp">BMP</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <legend>Quality</legend>
+            <input type="range" name="quality" min="1" max="100" step="1" @bind="@DownloadProperties.Quality">
+            <span>@DownloadProperties.Quality</span>
+        </fieldset>
+        <fieldset>
+            <legend>Size</legend>
+            <label class="styled-label">
+                x0.2
+                <input type="radio" name="size" checked="@IsSizeSelected(0.2f)" @onchange="() => SetSize(0.2f)">
+            </label>
+            <label class="styled-label">
+                x0.5
+                <input type="radio" name="size" checked="@IsSizeSelected(0.5f)" @onchange="() => SetSize(0.5f)">
+            </label>
+            <label class="styled-label">
+                x0.7
+                <input type="radio" name="size" checked="@IsSizeSelected(0.7f)" @onchange="() => SetSize(0.7f)">
+            </label>
+            <label class="styled-label">
+                Full size
+                <input type="radio" name="size" checked="@IsSizeSelected(1)" @onchange="() => SetSize(1)">
+            </label>
+            
+        </fieldset>
+        <a class="btn btn-primary" href="@GenerateDownloadUrl()" download="@Picture.Title">Download</a>
+    </form>
+</div>
+
+@code {
+
+    [Parameter]
+    public Picture Picture { get; set; } = null!;
+
+    private DownloadPropertiesModel DownloadProperties { get; set; } = new() {
+        Format = "png"
+    };
+
+    private bool IsSizeSelected(float size)
+    {
+        return DownloadProperties.Size == size;
+    }
+
+    private void SetSize(float size)
+    {
+        DownloadProperties.Size = size;
+    }
+
+    private string GenerateDownloadUrl() {
+        return $"/api/images/{Picture.Folder.ID}/image/{Picture.ID}?size={DownloadProperties.Size * Picture.Width}&format={DownloadProperties.Format}&compression={DownloadProperties.Quality}";
+    }
+}
+

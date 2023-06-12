@@ -1,9 +1,44 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Images App</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="wrapper">
+    <div class="main-content">
+        <p class="description">Welcome to the Images App. Upload and organize your images with ease.</p>
+        <h1 class="title">Images App</h1>
+        <AuthorizeView>
+            <Authorized>
+                <a href="/folders">
+                    <button class="start-button">Check folders</button>
+                </a>
+            </Authorized>
+            <NotAuthorized>
+                <a href="/sign">
+                    <button class="start-button">Start</button>
+                </a>
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+  <div class="floating-icons">
+    <span class="icon icon1">
+        <img src="/assets/icons/gallery.png">
+    </span>
+    <span class="icon icon2">
+        <img src="/assets/icons/folder.png">
+    </span>
+    <span class="icon icon3">
+        <img src="/assets/icons/folder.png">
+    </span>
+    <span class="icon icon4">
+        <img src="/assets/icons/photo.png">
+    </span>
+    <span class="icon icon5">
+        <img src="/assets/icons/camera.png">
+    </span>
+    <span class="icon icon6">
+        <img src="/assets/icons/folder.png">
+    </span>
+  </div>
+</div>
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />

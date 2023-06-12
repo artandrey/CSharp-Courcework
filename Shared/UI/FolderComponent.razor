@@ -1,33 +1,52 @@
 @using DB.Models
 @using Pages
+@inject NavigationManager navigationManager
 
-<div class="card p-4 m-2">
-    <a href="/folders/@Folder.Id">
-
-    <span>@Folder.Name</span>
-    <button @onclick="DeleteFolder">
-        Delete
-    </button>
-    <button @onclick="AddFriend">
-        Add friend
-    </button>
-    </a>
-</div>
+    <MediaItem Selectable="false" Title="@Folder.Name" OnRename="@RenameFolder" Renameable="@IsOwner">
+        <MediaContent>
+            <img @ondblclick="NavigateToFolderPage" class="folder-icon" src="/assets/icons/folder.png" >
+            <a href="/folders/@Folder.ID">
+                Open
+            </a>
+        </MediaContent>
+        <Sidebar>
+            @if(IsOwner) {
+                <button class="btn btn-danger" @onclick="DeleteFolder">
+                    Delete
+                </button>
+            }
+            else {
+                <button class="btn btn-warning" @onclick="LeaveFolder">
+                    Leave
+                </button>
+            }
+        </Sidebar>
+    </MediaItem>
 
     @code {
         [Parameter]
         public Folder Folder { get; set; } = null!;
 
+        [Parameter]
+        public bool IsOwner { get; set; } = false;
+
         [CascadingParameter]
-        public Folders FoldersCascading { get; set; }
+        public Folders FoldersCascading { get; set; } = null!;
 
-
-        private async Task AddFriend()
-        {
-        await FoldersCascading.AddFriendToFolder(Folder);
-        }
         private async Task DeleteFolder()
         {
-        await FoldersCascading.DeleteFolder(Folder.Id);
+        await FoldersCascading.DeleteFolder(Folder.ID);
+        }
+
+        private async Task RenameFolder(string folderName) {
+            await FoldersCascading.RenameFolder(Folder, folderName);
+        }
+
+        private async Task LeaveFolder() {
+            await FoldersCascading.LeaveFolder(Folder);
+        }
+
+        private void NavigateToFolderPage() {
+            navigationManager.NavigateTo($"/folders/{Folder.ID}");
         }
     }

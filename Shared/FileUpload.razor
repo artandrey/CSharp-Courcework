@@ -1,0 +1,73 @@
+
+@using System 
+@using System.IO
+@using Services
+@using DB.Models
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Logging
+@using Util
+@inject ILogger<FileUpload> Logger
+@inject IWebHostEnvironment webHostEnvironment
+@inject AuthorisedFolderService folderService
+
+
+<label class="wrapper">
+  <span class="me-2">Upload Files</span>
+  <ul class="list-unstyled">
+    <li>Upload up to @maxAllowedFiles files</li>
+    <li>up to @MemoryUnitConverter.FormatBytes(maxFileSize) each:</li>
+  </ul>
+  <span class="btn @(isLoading ? "btn-secondary" : "btn-primary") px-4">
+    Upload
+    <div class="d-none">
+        <InputFile accept="image/*" OnChange="@LoadFiles" multiple />
+    </div>
+  </span>
+
+    @if (isLoading)
+    {
+        <ProgressBar Progress="progressPercent * 100" />
+        <span>Progress: @string.Format("{0:P0}", progressPercent)</span>
+    }
+</label>
+
+
+
+@code {
+    [Parameter]
+    public Folder Folder { get; set; } = null!;
+
+    public delegate void OnFilesUploadDelegate();
+
+    [Parameter]
+    public OnFilesUploadDelegate? OnUpload { get; set; }
+
+    private List<IBrowserFile> loadedFiles = new();
+    private long maxFileSize = ImagesService.MAX_FILE_SIZE;
+    private int maxAllowedFiles = 50;
+    private bool isLoading;
+    private decimal progressPercent;
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        isLoading = true;
+        loadedFiles.Clear();
+        progressPercent = 0;
+        var files = e.GetMultipleFiles(maxAllowedFiles);
+        var filesCount = files.Count();
+        decimal uploadedFiles = 0;
+        foreach (var file in files)
+        {
+            var loadedPicture = await folderService.AddPicture(Folder.ID, file);
+            loadedFiles.Add(file);
+            uploadedFiles++;
+            progressPercent = uploadedFiles / filesCount;
+
+            StateHasChanged();
+        }
+
+        if (OnUpload != null) OnUpload();
+
+        isLoading = false;
+    }
+}

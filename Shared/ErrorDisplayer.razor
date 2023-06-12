@@ -1,0 +1,16 @@
+
+<div class="wrapper">
+    <ul class="list">
+    @foreach (var error in ErrorLogger.Exceptions)
+    {
+        <li class="error-item">@error.Message</li>
+    }
+    </ul>
+</div>
+
+@code {
+    [CascadingParameter]
+    public ErrorLogger ErrorLogger { get; set; } = null!;
+    
+}
+

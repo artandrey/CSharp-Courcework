@@ -28,7 +28,6 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
             var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>{
             new Claim(ClaimTypes.Name, userSession.UserName),
-            new Claim(ClaimTypes.Role, userSession.Role),
             new Claim(ClaimTypes.NameIdentifier, userSession.Id)
         }, "CustomAuth"));
             return await Task.FromResult(new AuthenticationState(claimsPrincipal));
@@ -47,7 +46,6 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
             await _sessionStorage.SetAsync("UserSession", userSession);
             claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>{
                 new Claim(ClaimTypes.Name, userSession.UserName),
-                new Claim(ClaimTypes.Role, userSession.Role),
                 new Claim(ClaimTypes.NameIdentifier, userSession.Id)
             }));
         }

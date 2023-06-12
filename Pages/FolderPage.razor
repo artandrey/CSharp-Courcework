@@ -1,29 +1,218 @@
 @page "/folders/{folderId}"
+@attribute [Authorize]
 @using Services
 @using DB.Models
+@using ImmagesApp.Shared.UI
+@using Exceptions
 @inject AuthorisedFolderService folderService
+@inject AuthService authService
+@inject ImagesService imageService
 
-<div>
-    <a href="/folders">Back</a>
+<CascadingValue Value="this">
+    <div class="page-content">
+
+    <a class="back-button" href="/folders">
+        <img class="back-icon" src="/assets/icons/down-right-arrow.png">
+        Back to folders
+    </a>
     @if (IsLoaded) {
-        <h2>@Folder.Name</h2>
+        <div class="folder-page-container">
+            <h2>@Folder.Name</h2>
+            @if (OpenedPicture != null)
+            {   
+                <ModalWrapper OnModalClose="@HandlePictureModalClose">
+                    <PicturesCarousel CurrentPicture="@OpenedPicture" Pictures="Folder.Immages.ToList()" FolderID="@Folder.ID" />
+                </ModalWrapper>
+            }
+                <section class="controls-section">
+                @if (@SelectedPicturesIDs.Count() > 0)
+                {
+                    <span>@SelectedPicturesIDs.Count() of @Folder.Immages.Count() selected</span>
+                    <button class="btn btn-outline-primary" @onclick="SelectAll">Select all</button>
+                    <button class="btn btn-outline-secondary" @onclick="CancelSelection">Cancel selection</button>
+                    <button class="btn btn-danger" @onclick="DeleteSelected" >Delete selected</button>
+                }
+                else {
+                    <span>There are @Folder.Immages.Count() pictures in folder</span>
+                }
+                </section>
+            <section class="pictures-section">
+
+            <ul class="pictures-list">
+                <li class="file-upload-wrapper">
+                    <FileUpload Folder="@Folder" OnUpload="OnUploadHandler" />
+                </li>
+                @foreach (var image in Folder.Immages)
+                {
+                    <li key="@image.ID">
+                        <MediaItem Title="@image.Title" OnRename="(title) => RenamePicture(image, title)" Selected="@SelectedPicturesIDs.Contains(image.ID)" OnSelected="(value) => HandlePictureSelect(image.ID, value)">
+                            <MediaContent>
+                                <div @onclick="() => OpenPictureModal(image)">
+                                    <ImmageLoader ObjectFit="cover" Width="300" Src="@($"/api/images/{FolderId}/image/{image.ID}?size=300")" />
+                                </div>
+                            </MediaContent>
+                            <Sidebar>
+                                <button class="btn btn-danger" @onclick="() => DeleteImage(image)">Delete</button>
+                            </Sidebar>
+                        </MediaItem>
+                    </li>
+                }
+            </ul>
+            <aside class="side-controls">
+                @if(IsOwner) {
+                    <AddUserDialog Folder="@Folder" OnUserAdd="HandleUserAdd" />
+                }
+                <ul class="users-list list-unstyled">
+                    @foreach (var user in Folder.AllowedUsers)
+                    {
+                        <li class="user-item">
+                            <UserBadge User="@user" />
+                            @if(IsOwner && user.ID != Folder.Creator.ID) {
+                                <button class="btn btn-outline-danger" @onclick="() => DeleteUser(user)">&#10006;</button>
+                            }
+                        </li>
+                    }
+                </ul>
+            </aside>
+            </section>
+        </div>
     }
     else {
         <span>Loading</span>
     }
-</div>
+    </div>
+</CascadingValue>
 
 @code {
     [Parameter]
     public string FolderId { get; set; } = "";
-    private Folder Folder { get; set; }
-    private bool IsLoaded { get; set; } = false;
+    private Folder Folder { get; set; } = null!;
 
-        protected override async void OnInitialized()
+    private bool IsOwner { get; set; } = false;
+    
+    private bool IsLoaded { get; set; } = false;
+    
+    private HashSet<string> SelectedPicturesIDs { get; set; } = new ();
+
+    private Picture? OpenedPicture { get; set; } = null;
+
+    [CascadingParameter]
+    public ErrorLogger Logger { get; set; } = null!;
+    
+    
+    
+    
+
+    protected override async void OnInitialized()
+    {
+        try
         {
             Folder = await folderService.GetById(FolderId);
             IsLoaded = true;
-            StateHasChanged();
+            @* IsOwner = await authService.GetUserId() == Folder.ID; *@
         }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
+            StateHasChanged();
+        
+    }
+
+    private void OnUploadHandler()
+    {
+        StateHasChanged();
+    }
+
+    private async Task DeleteImage(Picture picture) {
+        try
+        {
+        await imageService.Delete(Folder, picture);
+            
+        }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
+        StateHasChanged();
+    }
+
+    private async Task RenamePicture(Picture picture, string title) {
+        try
+        {
+        await folderService.RenamePicture(Folder.ID, picture, title);
+            
+        }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
+        StateHasChanged();
+    }
+
+    private void HandleUserAdd(User user) {
+        StateHasChanged();
+    }
+
+    private async Task DeleteUser(User user) {
+        try
+        {
+        await folderService.DeleteUser(user, Folder.ID);
+            
+        }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
+        StateHasChanged();
+    }
+
+    private void HandlePictureSelect(string id, bool isChecked) {
+        if (isChecked) {
+            SelectedPicturesIDs.Add(id);
+        }
+        else {
+            SelectedPicturesIDs.Remove(id);
+        }
+        StateHasChanged();
+    }
+
+    private void OpenPictureModal(Picture picture) {
+        OpenedPicture = picture;
+    }
+
+    private void HandlePictureModalClose() {
+        OpenedPicture = null;
+        StateHasChanged();
+    }
+
+    private void SelectAll() {
+        foreach (var image in Folder.Immages)
+        {
+            SelectedPicturesIDs.Add(image.ID);
+        }
+        StateHasChanged();
+    }
+
+    private void CancelSelection() {
+        SelectedPicturesIDs.Clear();
+        StateHasChanged();
+    }
+
+    private async void DeleteSelected() {
+        try
+        {
+        var folder = await folderService.DeletePictures(Folder.ID, SelectedPicturesIDs.ToList());
+        Folder = folder;
+            
+        }
+        catch (ServiceException error)
+        {
+            Logger.Log(error);
+        }
+        SelectedPicturesIDs.Clear();
+        StateHasChanged();
+    }
+        
 }
 

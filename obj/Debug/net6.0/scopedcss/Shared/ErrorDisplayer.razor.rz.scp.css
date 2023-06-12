@@ -1,0 +1,33 @@
+.wrapper[b-stwo5kjc2m] {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.list[b-stwo5kjc2m] {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: 2rem;
+}
+
+.error-item[b-stwo5kjc2m] {
+  padding: 1rem;
+  border: solid 2px #ee2828;
+  background-color: #ee6363;
+  color: #fafafa;
+  border-radius: 1rem;
+  animation: appear-b-stwo5kjc2m 1s ease 1 both alternate;
+}
+
+@keyframes appear-b-stwo5kjc2m {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

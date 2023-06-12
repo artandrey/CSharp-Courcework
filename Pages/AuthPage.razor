@@ -1,0 +1,64 @@
+@page "/sign"
+@using Services
+@using Exceptions
+@inject AuthService authService
+
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager navigationManager
+
+@* <h3>
+    Login page
+</h3>
+<span>@message</span>
+<button @onclick="Authenticate">
+    Login
+</button>
+<button @onclick="Ragister">
+    Register
+</button> *@
+
+@* <div>
+    <h2>Sign in</h2>
+    <span>Hello 👍</span>
+    <div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Email address</label>
+  <input type="email" class="form-control" placeholder="name@example.com">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Password</label>
+  <input type="password" class="form-control" placeholder="password">
+</div> *@
+
+<div class="wrapper">
+    <div class="forms-wrapper">
+        @if (SelectedForm == Forms.LOGIN)
+        {
+            <LoginForm  />
+        }
+        @if (SelectedForm == Forms.REGISTRATION)
+        {
+            <RegisterForm />
+        }
+            <hr>
+            <p class="separator">or</p>
+            <button class="btn btn-secondary" @onclick="() => SelectedForm = SelectedForm == Forms.LOGIN ? Forms.REGISTRATION : Forms.LOGIN">Sing @(SelectedForm == Forms.LOGIN ? "up" : "in")</button>
+    </div>
+</div>
+
+
+
+
+
+
+@code {
+    private enum Forms {
+        LOGIN,
+        REGISTRATION
+    }
+    
+    private Forms SelectedForm { get; set; } = Forms.LOGIN;
+
+
+    
+    
+}

@@ -1,21 +1,30 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Entities;
+using Util;
 
 namespace DB.Models;
 
-public class User
+[Collection("users")]
+public class User : Entity
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; set; }
-
     public string Name { get; set; } = null!;
 
     public string Password { get; set; } = null!;
 
     public string Email { get; set; } = null!;
 
-    public string Role { get; set; } = null!;
-
     public string Salt { get; set; } = null!;
+
+    public string HexColor { get; set; } = ColorGenerator.GenerateRandomHexColor();
+
+
+
+    [InverseSide]
+    public Many<Folder> Folders { get; set; } = null!;
+
+    public User()
+    {
+        this.InitManyToMany(() => Folders, folder => folder.AllowedUsers);
+    }
 }
